@@ -9,8 +9,8 @@ import styled from 'styled-components'
 
 const Background = styled.img`
     position:fixed;
-    height: auto;
-    width: 100vw;
+    height:${window.innerWidth > 1280 ? 'auto' : '100vh'};
+    width:${window.innerWidth > 1280 ? '100vw' : 'auto'};
     left  0px;
     top: 0px;
     z-index: -69;
@@ -43,9 +43,9 @@ export class Main extends Component {
         background="white"
         elevation={2}
         height={'auto'}
-        width={'60%'}
+        width={'80%'}
         padding={30}
-        marginX={'20%'}
+        marginX={'10%'}
         marginY={'10vh'}
         display="block"
         alignItems="center"
@@ -70,7 +70,11 @@ export class Main extends Component {
               }>
               <Background
                 style={{ opacity: props.opacity }}
-                src="https://loremflickr.com/1280/720/mexico"
+                src={
+                  window.innerWidth > 1280
+                    ? 'https://loremflickr.com/1280/720/mexico'
+                    : 'https://loremflickr.com/720/1280/mexico'
+                }
                 alt="mexico"
               />
             </LazyLoad>

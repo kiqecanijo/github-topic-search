@@ -27,7 +27,6 @@ export const getTopicsFromApi = (
     )
     .then(({ data }) => {
       console.log('%c updated items ✔️', 'background-color: green;color:white')
-      console.log(data)
       dispatch(reduceNewItems(data.items, data.total_count, page))
     })
     .catch(error => {
