@@ -28,7 +28,7 @@ export const getTopicsFromApi = (
     .then(({ data }) => {
       console.log('%c updated items ✔️', 'background-color: green;color:white')
       console.log(data)
-      dispatch(reduceNewItems(data.items))
+      dispatch(reduceNewItems(data.items, data.total_count, page))
     })
     .catch(error => {
       console.log(
@@ -40,9 +40,9 @@ export const getTopicsFromApi = (
     })
 }
 
-export const reduceNewItems = items => ({
+export const reduceNewItems = (items, count, page) => ({
   type: GET_TOPICS,
-  payload: items
+  payload: { items, count, page }
 })
 
 export const changeApi = status => ({

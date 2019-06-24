@@ -9,7 +9,7 @@ const Div = styled.div`
   text-align: center;
 `
 
-const Info = props => {
+export const Info = props => {
   const handleChangeApi = event => {
     props.onChangeApi(event.target.checked)
   }

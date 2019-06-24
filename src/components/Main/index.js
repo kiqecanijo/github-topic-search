@@ -1,19 +1,10 @@
 import React, { Component } from 'react'
 import LazyLoad from 'react-lazy-load'
 import { Spring } from 'react-spring'
-import axios from 'axios'
-import { Item, Info } from '../'
+import { Item, Info, Paginator } from '../'
 import { connect } from 'react-redux'
 import { getTopicsFromApi, insertText } from '../../actions'
-import {
-  Pane,
-  Button,
-  TextInput,
-  Heading,
-  Strong,
-  SearchInput,
-  Text
-} from 'evergreen-ui'
+import { Pane, Button, Heading, SearchInput, Text } from 'evergreen-ui'
 import styled from 'styled-components'
 
 const Background = styled.img`
@@ -26,7 +17,7 @@ const Background = styled.img`
     filter: blur(0px);
 `
 
-class Main extends Component {
+export class Main extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -125,6 +116,7 @@ class Main extends Component {
         </Button>
 
         <Pane clearfix>{this.props.items.map(el => <Item values={el} />)}</Pane>
+        <Paginator />
       </Pane>
     )
   }

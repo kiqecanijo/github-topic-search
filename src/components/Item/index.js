@@ -1,7 +1,7 @@
 import React from 'react'
 import { Pane, Text, Popover, Button } from 'evergreen-ui'
 
-const Item = ({ values }) => {
+export const Item = ({ values }) => {
   const { name, description, created_by, released, created_at, score } = values
   return (
     <Popover
