@@ -1,85 +1,148 @@
 import React, { Component } from 'react'
-import { Button, SearchInput, Pane, Text, Heading } from 'evergreen-ui'
-import styled from 'styled-components'
 import LazyLoad from 'react-lazy-load'
-import { useSpring } from 'react-spring'
+import { Spring } from 'react-spring'
 import axios from 'axios'
-import { Item } from '../'
+import { Item, Info } from '../'
+import { connect } from 'react-redux'
+import { getTopicsFromApi, insertText } from '../../actions'
+import {
+  Pane,
+  Button,
+  TextInput,
+  Heading,
+  Strong,
+  SearchInput,
+  Text
+} from 'evergreen-ui'
+import styled from 'styled-components'
 
-const Viewport = styled.div`
-  margin: 0px;
-  padding: 0px;
-  border: 0px;
+const Background = styled.img`
+    position:fixed;
+    height: auto;
+    width: 100vw;
+    left  0px;
+    top: 0px;
+    z-index: -69;
+    filter: blur(0px);
 `
+
 class Main extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      text: '',
-      pages: 1,
-      per_page: 10,
-      items: []
+      readyBackground: false
     }
   }
 
-  handleSearch(event) {
-    axios
-      .get('https://api.github.com/search/topics', {
-        params: {
-          q: this.state.text,
-          page: this.state.pages,
-          per_page: this.state.per_page
-        },
-        headers: {
-          Accept: 'application/vnd.github.mercy-preview+json'
-        }
-      })
-      .then(({ data }) =>
-        this.setState(
-          { items: data.items },
-          console.log(
-            '%c updated items ✔️',
-            'background-color: green;color:white'
-          )
-        )
-      )
-      .catch(error => console.log('❎ unespected error sending request 😵'))
+  handleSearch() {
+    this.props.onHandleSearch(
+      this.props.text,
+      this.props.pages,
+      this.props.per_page,
+      this.props.server
+    )
+  }
+  handleCurrentText(event) {
+    this.props.onHandleText(event.target.value)
   }
 
   render() {
     return (
-      <Viewport className="App">
-        <header>
-          <Heading size={900} marginTop="default" alignItems="center">
-            900: The quick brown fox jumps over the lazy dog
-          </Heading>
-        </header>
-        <Pane
-          elevation={4}
-          float="left"
-          width={'90vw'}
-          height={120}
-          margin={24}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          flexDirection="column">
-          <Text>{this.state.text}</Text>
-          <SearchInput
-            onChange={event => this.setState({ text: event.target.value })}
-            placeholder="search something"
-            height={60}
-          />
-          <Button
-            value={this.state.text}
-            onClick={this.handleSearch.bind(this)}>
+      <Pane
+        background="white"
+        elevation={2}
+        height={'auto'}
+        width={'60%'}
+        padding={30}
+        marginX={'20%'}
+        marginY={'10vh'}
+        display="block"
+        alignItems="center"
+        justifyContent="center"
+        border="default"
+        borderRadius={5}
+        style={{ minWidth: '350px' }}>
+        <Spring
+          from={{ opacity: this.state.readyBackground ? 1 : 0 }}
+          to={{ opacity: this.state.readyBackground ? 1 : 0 }}
+          config={{ delay: 3000, precision: 0.5, duration: 300 }}>
+          {props => (
+            <LazyLoad
+              onContentVisible={event =>
+                this.setState(
+                  { readyBackground: true },
+                  console.log(
+                    '%c loaded-background ✔️',
+                    'background-color: green;color:white'
+                  )
+                )
+              }>
+              <Background
+                style={{ opacity: props.opacity }}
+                src="https://loremflickr.com/1280/720/mexico"
+                alt="mexico"
+              />
+            </LazyLoad>
+          )}
+        </Spring>
+
+        <Heading
+          fontWeight={1000}
+          style={{ lineHeight: '10vh', fontSize: '10vh', textAlign: 'center' }}
+          color={'#4f6eff'}
+          margin={30}
+          alignItems={'center'}
+          justifyContent="center">
+          Tag Search
+        </Heading>
+        <Info />
+        <SearchInput
+          value={this.props.text}
+          placeholder="🎹 type something here"
+          onChange={event => this.handleCurrentText(event)}
+          width="100%"
+          height={60}
+        />
+
+        <Button
+          appearance="primary"
+          type="submit"
+          marginY={20}
+          marginX={'auto'}
+          intent={'#4f6eff'}
+          display={'block'}
+          height={'auto'}
+          width={'auto'}
+          paddingX={30}
+          paddingY={20}
+          alignItems={'center'}
+          waves="light"
+          value={this.props.text}
+          onClick={this.handleSearch.bind(this)}>
+          <Text color={'white'} style={{ fontSize: '3vh' }}>
             Search
-          </Button>
-          {this.state.items.map(el => <Item values={el} />)}
-        </Pane>
-      </Viewport>
+          </Text>
+        </Button>
+
+        <Pane clearfix>{this.props.items.map(el => <Item values={el} />)}</Pane>
+      </Pane>
     )
   }
 }
 
-export default Main
+const mapStateToProps = ({ text, pages, per_page, items, server }) => ({
+  text,
+  pages,
+  per_page,
+  items,
+  server
+})
+const mapDispatchToProps = {
+  onHandleSearch: getTopicsFromApi,
+  onHandleText: insertText
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Main)
