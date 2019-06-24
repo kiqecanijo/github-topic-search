@@ -7,6 +7,7 @@ import { getTopicsFromApi, insertText } from '../../actions'
 import { Pane, Button, Heading, SearchInput, Text } from 'evergreen-ui'
 import styled from 'styled-components'
 
+//// TODO: fix this patch
 const Background = styled.img`
     position:fixed;
     height:${window.innerWidth > 1280 ? 'auto' : '100vh'};

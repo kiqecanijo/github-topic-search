@@ -20,9 +20,9 @@
     "styled-components": "^4.3.2"
   },
   "scripts": {
+    "start": "PORT=3003 react-scripts start ",
     "start-server":
       "nodemon server/server.js --exec babel-node --presets babel-preset-env",
-    "start": "PORT=3003 react-scripts start ",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
