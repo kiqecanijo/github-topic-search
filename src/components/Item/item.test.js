@@ -1,3 +1,5 @@
+/** @format */
+
 import React from 'react'
 import { shallow, mount, render } from 'enzyme'
 import { Item } from './index.js'
