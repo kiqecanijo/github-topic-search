@@ -1,3 +1,5 @@
+<!-- @format -->
+
 # `github topic Search`
 
 #### Simple tag seach practice 🚩
@@ -24,9 +26,9 @@
 
 ![](resources/local-server.png)
 
-### if you want to build:
-
 ##### this project was bootstrapped from create-react-app, just use:
+
+### if you want to build:
 
 ###### `npm run build`
 
@@ -35,3 +37,7 @@
 ##### don't do it jet 🚫
 
 ###### `npm run test`
+
+### if you want to Deploy:
+
+###### `npm run build`
