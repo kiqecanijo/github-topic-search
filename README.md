@@ -38,6 +38,10 @@
 
 ###### `npm run test`
 
-### if you want to Deploy:
+### if you want to Deploy web App:
 
 ###### `npm run build`
+
+### if you want to Deploy server:
+
+###### //comming soon

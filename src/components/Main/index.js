@@ -12,8 +12,8 @@ import styled from 'styled-components'
 //// TODO: fix this patch
 const Background = styled.img`
     position:fixed;
-    height:${window.innerWidth > 1280 ? 'auto' : '100vh'};
-    width:${window.innerWidth > 1280 ? '100vw' : 'auto'};
+    height:100vh;
+    width:auto;
     left  0px;
     top: 0px;
     z-index: -69;
@@ -73,11 +73,7 @@ export class Main extends Component {
 							}>
 							<Background
 								style={{ opacity: props.opacity }}
-								src={
-									window.innerWidth > 1280
-										? 'https://loremflickr.com/1280/720/mexico'
-										: 'https://loremflickr.com/720/1280/mexico'
-								}
+								src="https://loremflickr.com/1280/720/mexico"
 								alt="mexico"
 							/>
 						</LazyLoad>
@@ -122,8 +118,8 @@ export class Main extends Component {
 				</Button>
 
 				<Pane clearfix>
-					{this.props.items.map(el => (
-						<Item values={el} />
+					{this.props.items.map((el, index) => (
+						<Item values={el} key={index} />
 					))}
 				</Pane>
 				<Paginator />
